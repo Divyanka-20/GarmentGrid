@@ -6,32 +6,36 @@
 
 ## Overview
 
-**GarmentGrid** is a full-featured clothing e-commerce website built using **PHP**, **MySQL**, **HTML**, **CSS**, and **JavaScript**. It offers a seamless shopping experience with user authentication, dynamic product listings, cart management, coupon codes, and order placement.
+**👗 GarmentGrid** is a full-featured clothing e-commerce website built using **PHP**, **MySQL**, **HTML**, **CSS**, and **JavaScript**. It offers a seamless shopping experience with user authentication 🔐, dynamic product listings 🛍️, cart management 🛒, coupon codes 🎟️, and order placement ✅.
 
-This project showcases my skills in full-stack web development, database integration, and responsive UI design. It can serve as a foundation for scalable e-commerce platforms.
+This project showcases my skills in full-stack web development 💻, database integration 🗄️, and responsive UI design 📱. It can serve as a foundation for scalable e-commerce platforms 🚀.
 
 ---
 
 ## Features
 
-- User registration and login system with session management  
-- Browse products by categories (Men’s Wear, Women’s Wear, Kids, Accessories, etc.)  
-- Dynamic shopping cart with add/remove/update quantity functionality  
-- Multiple discount coupon codes with custom validation logic  
-- Real-time cart price calculations including discounts and shipping  
-- Order placement with detailed order history  
-- Responsive design for mobile and desktop  
-- Secure backend with prepared statements to prevent SQL injection  
-- Modular and clean PHP code for easy maintenance  
-
+- ✅ User registration and login system with secure session management  
+- 🛍️ Browse products by categories (Men’s Wear, Women’s Wear, Kids, Accessories, etc.)  
+- 🛒 Dynamic shopping cart with add, remove, and update quantity functionality  
+- 🎟️ Multiple discount coupon codes with custom validation, allowing **one-time use per user**  
+- 💰 Real-time cart price calculations including discounts and shipping fees  
+- 📝 Order placement with detailed order history and option to **cancel orders anytime**  
+- 📱 Fully responsive design for seamless experience on mobile and desktop devices  
+- 🔐 Secure backend with prepared statements to prevent SQL injection and other vulnerabilities  
+- 🧩 Modular and clean PHP codebase for easy maintenance and scalability  
+- 👤 User profile management: update personal information easily in the account section  
+- 🔍 Advanced search with category filters for quick product discovery  
+- 🚪 User logout functionality to securely end sessions
+  
 ---
 
-## Technologies Used
+## 🚀 Tech Stack Used
 
-- **Frontend:** HTML5, CSS3, JavaScript  
-- **Backend:** PHP 7+  
-- **Database:** MySQL  
-- **Version Control:** Git & GitHub  
+- 🖥️ **Frontend:** HTML, CSS, JavaScript  
+- ⚙️ **Backend:** PHP  
+- 🗄️ **Database:** MySQL  
+- 📂 **Version Control:** Git, GitHub  
+- 🌐 **Server:** Apache / XAMPP (for local development)  
 
 ---
 
@@ -41,3 +45,9 @@ This project showcases my skills in full-stack web development, database integra
    ```bash
    git clone https://github.com/Divyanka-20/GarmentGrid.git]
    cd garmentgrid
+2. Set up a local server environment (XAMPP/WAMP).
+3. Import the database.sql file into your MySQL database.
+4. Configure your database credentials in database_connection.php.
+5. Open http://localhost/garmentgrid in your browser and start shopping! 🎉
+
+## Happy shopping! 🛍️👗✨
