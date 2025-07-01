@@ -1,6 +1,6 @@
 # GarmentGrid — Clothing E-Commerce Website 🛍️👕
 
-![GarmentGrid Logo](https://github.com/Divyanka-20/GarmentGrid/raw/main/assets/logo.png){ width=200px height=200px }
+<img src="https://github.com/Divyanka-20/GarmentGrid/raw/main/assets/logo.png" alt="GarmentGrid Logo" width="200" height="200" />
 
 ## Overview
 
