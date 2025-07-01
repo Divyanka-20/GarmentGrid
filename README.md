@@ -52,5 +52,4 @@ This project showcases my skills in full-stack web development 💻, database in
 
 ---
 
-### Thank you for visiting GarmentGrid! <br>
-Happy shopping! 🛍️👗✨
+### Thank you for visiting GarmentGrid! <br> Happy shopping! 🛍️👗✨
