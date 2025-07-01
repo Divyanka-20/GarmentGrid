@@ -50,4 +50,5 @@ This project showcases my skills in full-stack web development 💻, database in
 4. Configure your database credentials in database_connection.php.
 5. Open http://localhost/Garments/dashboard.php in your browser and start shopping! 🎉
 
-## Happy shopping! 🛍️👗✨
+** Thank you for visiting GarmentGrid! **
+** Happy shopping! 🛍️👗✨ **
