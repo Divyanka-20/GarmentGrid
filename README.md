@@ -44,10 +44,10 @@ This project showcases my skills in full-stack web development 💻, database in
 1. Clone the repository:
    ```bash
    git clone https://github.com/Divyanka-20/GarmentGrid.git]
-   cd garmentgrid
+   cd Garments
 2. Set up a local server environment (XAMPP/WAMP).
 3. Import the database.sql file into your MySQL database.
 4. Configure your database credentials in database_connection.php.
-5. Open http://localhost/garmentgrid in your browser and start shopping! 🎉
+5. Open http://localhost/Garments in your browser and start shopping! 🎉
 
 ## Happy shopping! 🛍️👗✨
