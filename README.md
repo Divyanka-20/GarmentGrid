@@ -6,9 +6,9 @@
 
 ## Overview
 
-**👗 GarmentGrid** is a full-featured clothing e-commerce website built using **PHP**, **MySQL**, **HTML**, **CSS**, and **JavaScript**. It offers a seamless shopping experience with user authentication 🔐, dynamic product listings 🛍️, cart management 🛒, coupon codes 🎟️, and order placement ✅.
+**👗 GarmentGrid** is a full-featured clothing e-commerce website built using **PHP**, **MySQL**, **HTML**, **CSS**, and **JavaScript**. It offers a seamless shopping experience with user authentication, dynamic product listings, cart management, coupon codes, and order placement ✅🛒🔐.
 
-This project showcases my skills in full-stack web development 💻, database integration 🗄️, and responsive UI design 📱. It can serve as a foundation for scalable e-commerce platforms 🚀.
+This project showcases my skills in full-stack web development, database integration, and responsive UI design. It can serve as a foundation for scalable e-commerce platforms 🚀📱💻.
 
 ---
 
@@ -44,11 +44,30 @@ This project showcases my skills in full-stack web development 💻, database in
 1. Clone the repository:
    ```bash
    git clone https://github.com/Divyanka-20/GarmentGrid.git]
-   cd Garments
-2. Set up a local server environment (XAMPP/WAMP).
-3. Import the database.sql file into your MySQL database.
-4. Configure your database credentials in database_connection.php.
-5. Open http://localhost/Garments/dashboard.php in your browser and start shopping! 🎉
+2. - Then navigate into the project directory:
+   ```bash
+   cd GarmentGrid
+3. Move the Project to Your Web Server Directory
+- For XAMPP: Move the GarmentGrid folder to
+  ```bash
+  C:\xampp\htdocs\
+- For WAMP: Move the folder to
+  ```bash
+  C:\wamp64\www\
+4. Start Your Server Environment
+- Launch XAMPP or WAMP
+- Start Apache and MySQL modules
+5. Import the Database
+- Open phpMyAdmin in your browser: http://localhost/phpmyadmin
+- Create a new database (e.g., garmentgrid)
+- Import the database.sql file from the project folder into this database
+6. Configure Database Credentials
+- Open database_connection.php inside the project folder
+- Update the database password
+7. Launch the Application
+- Open your browser and go to
+  ```bash
+  http://localhost/GarmentGrid/dashboard.php
 
 ---
 
