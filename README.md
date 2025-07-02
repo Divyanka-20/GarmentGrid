@@ -57,10 +57,7 @@ This project showcases my skills in full-stack web development, database integra
 4. Start Your Server Environment
   - Launch XAMPP or WAMP
   - Start Apache and MySQL modules
-5. Import the Database
-  - Open phpMyAdmin in your browser: http://localhost/phpmyadmin
-  - Create a new database - garmentgrid
-  - Import the database.sql file from the project folder into this database
+5. Import the database.sql file into your MySQL database
 6. Configure Database Credentials
   - Open database_connection.php inside the project folder
   - Update the database password
