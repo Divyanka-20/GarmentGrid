@@ -1,12 +1,12 @@
 -- Creating database
 
-CREATE DATABASE garments;
+CREATE DATABASE garmentgrid;
 
 
 
 -- Using the garments database
 
-USE garments;
+USE garmentgrid;
 
 
 
@@ -218,7 +218,7 @@ INSERT INTO womens (id, name, price, description, image, category) VALUES
 (57, 'Pencil Dress', 1899.00, 'Tailored office dress with cap sleeves', 'https://xcdn.next.co.uk/common/items/default/default/publications/g75/shotzoom/24/U85-389s2.jpg', 'Office Wear'),
 (58, 'Office Blazer Only', 1599.00, 'Professional single-button blazer', 'https://handcmediastorage.blob.core.windows.net/productimages/JL/JLPZA002-G01-170947-1400px-1820px.jpg', 'Office Wear'),
 (59, 'Office Skirt Suit', 2299.00, 'Blazer and skirt co-ord set', 'https://i.pinimg.com/originals/e2/71/73/e271736cc11004f99cbc77bd703340a9.jpg', 'Office Wear'),
-(60, 'Pinstripe Shirt', 1299.00, 'White & blue striped shirt for formal setting', 'https://i.pinimg.com/originals/81/a2/3d/81a23d04e2c37841e70730a2e8b24b9c.png', 'Office Wear')'
+(60, 'Pinstripe Shirt', 1299.00, 'White & blue striped shirt for formal setting', 'https://i.pinimg.com/originals/81/a2/3d/81a23d04e2c37841e70730a2e8b24b9c.png', 'Office Wear'),
 (61, 'Stretch Fit Pants', 1499.00, 'Stretchable formal pants for all-day wear', 'https://cdna.lystit.com/photos/a02e-2014/01/25/eileen-fisher-plus-black-size-washable-stretch-crepe-slim-ankle-pants-product-1-11685689-0-360096612-normal.jpeg', 'Office Wear'),
 (62, 'Collar Blouse', 1199.00, 'Silky blouse with high collar for office', 'https://i.pinimg.com/originals/2a/a6/02/2aa60263c4322fd72bea398b00cc398e.jpg', 'Office Wear'),
 (63, 'Blazer Dress', 1899.00, 'One-piece dress styled as a blazer', 'https://cdn-img.prettylittlething.com/8/e/c/3/8ec3f16284746296004a7a967682dcd10ce0b5fc_cnc2988_1.jpg', 'Office Wear'),
