@@ -14,7 +14,7 @@ This project showcases my skills in full-stack web development, database integra
 
 ## 🌐 Live Demo
 
-Check out the live site here 👉 [GarmentGrid Live](http://www.garmentgrid.great-site.net/)
+Check out the live site here 👉 [GarmentGrid](http://www.garmentgrid.great-site.net/)
 
 ---
 
