@@ -205,7 +205,7 @@ $conn->close();
   <div class="wrapper">
     <?php include 'navbar.php'; ?>
 
-    <h1 class="offers-heading"><?php echo strtoupper($table); ?> CATEGORIES</h1>
+    <h1 class="offers-heading"><?php echo strtoupper($table); ?></h1>
 
     <div class="items-container">
   <?php
