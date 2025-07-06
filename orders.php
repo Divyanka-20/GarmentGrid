@@ -19,7 +19,7 @@ $ordersResult = $orderQuery->get_result();
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GarmentGrid - My Orders</title>
   <style>
     * { 
@@ -49,20 +49,12 @@ $ordersResult = $orderQuery->get_result();
 
     .order-card {
       background: #fff;
-      border-radius: 10px;
       padding: 20px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100%; /* Optional for uniformity */
-    }
-
-    /* Spacing between cards: 15px except last card 20px */
-    .order-card:not(:last-of-type) {
-      margin-bottom: 15px;
-    }
-    .order-card:last-of-type {
+      height: 100%;
       margin-bottom: 20px;
     }
 
@@ -76,12 +68,13 @@ $ordersResult = $orderQuery->get_result();
 
     .order-items {
       margin-top: 15px;
+      padding-left: 0;
     }
 
     .order-items li {
-      margin-bottom: 6px;
+      margin-bottom: 12px;
       list-style: none;
-      padding: 6px;
+      padding: 10px;
       background: #f9f9f9;
       border-radius: 6px;
     }
@@ -136,10 +129,50 @@ $ordersResult = $orderQuery->get_result();
       margin-bottom: 0;
     }
 
+    .star-rating {
+  display: flex;
+  flex-direction: row-reverse; /* reverse to fix correct order of stars */
+  font-size: 24px;
+  user-select: none;
+}
+
+.star-rating input[type="radio"] {
+  display: none;
+}
+
+.star-rating label {
+  color: #ccc;
+  padding: 0 5px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: gold;
+}
+
+.star-rating input[type="radio"]:checked ~ label {
+  color: gold;
+}
+
+
+    .rate-btn{
+      padding: 10px 30px; 
+      background-color: #DC143C; 
+      color: white; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer;
+      margin-left: 10px;
+      font-weight: bold; 
+      font-family: 'Times New Roman', Times, serif; 
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
-    <div class="wrapper">
+<div class="wrapper">
   <?php include 'navbar.php'; ?>
   <div class="container">
     <h1>MY ORDERS 📦</h1>
@@ -155,14 +188,50 @@ $ordersResult = $orderQuery->get_result();
           <ul class="order-items">
             <?php
               $orderId = $order['id'];
-              $itemsQuery = $conn->prepare("SELECT product_name, price, quantity FROM order_items WHERE order_id = ?");
+              // Fetch order items with rating
+              $itemsQuery = $conn->prepare("SELECT product_name, price, quantity, rating FROM order_items WHERE order_id = ?");
               $itemsQuery->bind_param("i", $orderId);
               $itemsQuery->execute();
               $itemsResult = $itemsQuery->get_result();
+
               while ($item = $itemsResult->fetch_assoc()):
             ?>
               <li>
                 <?php echo htmlspecialchars($item['product_name']); ?> × <?php echo $item['quantity']; ?> — ₹<?php echo number_format($item['price'], 2); ?>
+
+                <?php if ($order['order_status'] !== 'Cancelled' && is_null($item['rating'])): ?>
+                  <form method="POST" action="submit_rating.php" style="margin-top: 8px; display: flex; align-items: center;">
+                    <input type="hidden" name="order_id" value="<?php echo $orderId; ?>">
+                    <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['product_name']); ?>">
+
+                    <div class="star-rating">
+<?php for ($i = 5; $i >= 1; $i--): ?>
+  <input type="radio" id="star<?php echo $i . '_' . $orderId . '_' . htmlspecialchars($item['product_name']); ?>" name="rating" value="<?php echo $i; ?>" required />
+  <label for="star<?php echo $i . '_' . $orderId . '_' . htmlspecialchars($item['product_name']); ?>" title="<?php echo $i; ?> star">★</label>
+<?php endfor; ?>
+
+</div>
+
+
+
+                    <button type="submit" class="rate-btn">Rate Now</button>
+                  </form>
+                <?php endif; ?>
+
+
+                <?php if (!is_null($item['rating'])): ?>&nbsp;
+                    <?php
+                      $rating = (int) round($item['rating']);
+                      for ($i = 1; $i <= 5; $i++) {
+                        if ($i <= $rating) {
+                          echo '<span style="color: gold; font-size:25px;">★</span>';
+                        } else {
+                          echo '<span style="color: #ccc; font-size:25px;">☆</span>';
+                        }
+                      }
+                    ?>
+                <?php endif; ?>
+
               </li>
             <?php endwhile; ?>
           </ul>
@@ -177,7 +246,7 @@ $ordersResult = $orderQuery->get_result();
             <?php if ($order['order_status'] !== 'Cancelled'): ?>
               <form method="POST" action="cancel_order.php" onsubmit="return confirm('Are you sure you want to cancel this order?');" style="margin-left: 10px;">
                 <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
-                <button type="submit" style="padding: 12px 50px; background-color: #DC143C; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                <button type="submit" style="padding: 12px 50px; background-color: #DC143C; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Times New Roman', Times, serif; font-size: 16px;">
                   Cancel Order
                 </button>
               </form>
@@ -187,7 +256,7 @@ $ordersResult = $orderQuery->get_result();
           </div>
 
           <?php if ($order['coupon_code']): ?>
-            <p>Coupon Used: <bold style="font-family: 'Times New Roman', Times, serif; color:rgb(37, 114, 177); font-weight: bold; text-decoration: none;"><?php echo htmlspecialchars($order['coupon_code']); ?></bold></p>
+            <p>Coupon Used: <strong style="font-family: 'Times New Roman', Times, serif; color: rgb(37, 114, 177);"><?php echo htmlspecialchars($order['coupon_code']); ?></strong></p>
           <?php endif; ?>
         </div>
       <?php endwhile; ?>
@@ -197,6 +266,6 @@ $ordersResult = $orderQuery->get_result();
 
   </div>
   <?php include 'footer.php'; ?>
-    </div>
+</div>
 </body>
 </html>
