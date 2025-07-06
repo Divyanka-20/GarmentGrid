@@ -82,14 +82,16 @@ if (!$skip_search) {
 
         foreach ($keywords as $word) {
             $like = "%" . $word . "%";
-            $conditions[] = "(name LIKE ? OR category LIKE ?)";
+            $conditions[] = "(name LIKE ? OR category LIKE ? OR subcategory LIKE ? OR brand LIKE ?)";
             $params[] = $like;
             $params[] = $like;
-            $types .= 'ss';
+            $params[] = $like;
+            $params[] = $like;
+            $types .= 'ssss';
         }
 
-        $whereClause = implode(" OR ", $conditions);
-        $sql = "SELECT name, price, image, category, '$table' AS source_table FROM $table WHERE $whereClause";
+        $whereClause = implode(" AND ", $conditions);
+        $sql = "SELECT name, price, image, category, subcategory, brand, description, rating, '$table' AS source_table FROM $table WHERE $whereClause";
 
         $stmt = $conn->prepare($sql);
         if ($stmt) {
@@ -124,197 +126,281 @@ $cartStmt->close();
     <title>GarmentGrid - Search Results</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        <?php include 'styles/page.css'; ?>
         * {
-          box-sizing: border-box;
-        }
+      box-sizing: border-box;
+    }
 
-        body {
-          margin: 0;
-          padding: 0;
-          background-image: url('https://images.pond5.com/abstract-light-multi-color-backgrounds-070554390_prevstill.jpeg');
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-attachment: fixed;
-          font-family: Arial, sans-serif;
-          overflow-x: hidden;
-        }
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('https://images.pond5.com/abstract-light-multi-color-backgrounds-070554390_prevstill.jpeg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
 
-        .wrapper {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+    .wrapper {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .items-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 25px;
-            padding: 20px;
-            justify-content: center;
-        }
+    h1.offers-heading {
+      text-align: center;
+      font-size: 30px;
+      color: rgb(255, 0, 123);
+      font-family: 'Times New Roman', Times, serif;
+      padding: 20px 0;
+      margin: 0 auto;
+    }
 
-        .item-card {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-            text-align: center;
-            width: 100%;
-            max-width: 220px;
-            height: 520px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 15px;
-            margin: auto;
-        }
+    .items-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+      padding: 20px;
+      justify-content: center;
+    }
 
-        .item-card img {
-            width: 100%;
-            height: 335px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
+    .item-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      width: 100%;
+      max-width: 255px;
+      height: 560px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 15px;
+      margin: auto;
+      position: relative;
+    }
 
-        .item-details h3 {
-            margin: 10px 0 5px;
-            font-size: 20px;
-            color: #222;
-        }
+    .item-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
 
-        .item-details p {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 5px;
-        }
+    .item-details {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      margin-top: 10px;
+    }
 
-        .card-buttons {
-            margin-top: auto;
-        }
+    .item-details h3 {
+      margin: 10px 0 5px;
+      font-size: 20px;
+      color: #222;
+    }
 
-        .quantity-form {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            align-items: center;
-        }
+    .item-details p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 10px;
+    }
 
-        .quantity-form button {
-            padding: 10px 12px;
-            font-size: 16px;
-            width: 100%;
-            border: none;
-            background-color: crimson;
-            color: white;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    .card-buttons {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-        .quantity-form button:hover {
-            background-color: #A11A35;
-        }
+    .card-buttons form,
+    .card-buttons button.view-more-btn {
+      flex: 1 1 45%;
+      min-width: 100px;
+    }
 
-        .add-to-cart-link {
-            padding: 10px 12px;
-            width: 100%;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            background-color: crimson;
-            color: white;
-            cursor: pointer;
-        }
+    .card-buttons button,
+    .card-buttons .add-to-cart-link {
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+      box-sizing: border-box;
+      border: none;
+      font-size: 14px;
+    }
 
-        .add-to-cart-link:hover {
-            background-color: #A11A35;
-        }
+    .card-buttons button.view-more-btn {
+      background-color: #007BFF;
+      color: white;
+    }
 
-        h1 {
-            text-align: center;
-            color: rgb(255, 0, 123);
-            margin: 20px 0;
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 40px;
-        }
+    .card-buttons button {
+      background-color: crimson;
+      color: white;
+    }
 
-        @media screen and (max-width: 600px) {
-          .items-container {
-            grid-template-columns: repeat(2, 1fr);
-            padding: 10px;
-            gap: 20px;
-          }
+    .quantity-form {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      flex: 1 1 100%;
+    }
 
-          .item-card {
-            height: 400px;
-            width: 150px;
-          }
+    .quantity-form button {
+      padding: 8px 12px;
+      font-size: 16px;
+      border: none;
+      background-color: crimson;
+      color: white;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: auto;
+    }
 
-          .item-card img {
-            height: 210px;
-            width: 150px;
-          }
+    .quantity-form span {
+      font-weight: bold;
+      font-size: 16px;
+      min-width: 24px;
+      text-align: center;
+    }
 
-          .card-buttons button {
-            font-size: 14px;
-          }
+    /* Overlay container */
+    .hover-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 320px;
+      max-width: 90vw;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      padding: 20px;
+      transform: translate(-50%, -50%) scale(0);
+      transform-origin: center center;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+      z-index: 10;
+      text-align: center;
+      pointer-events: none;
+    }
 
-          nav .menu {
-            display: none;
-            flex-direction: column;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-          }
+    .hover-overlay.active {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-          nav .menu.active {
-            display: flex;
-          }
+    .hover-overlay img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
 
-          nav .hamburger {
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-          }
+    .hover-overlay h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      color: #222;
+    }
 
-          nav .hamburger span {
-            background: white;
-            height: 3px;
-            margin: 4px 0;
-            width: 25px;
-            border-radius: 2px;
-          }
+    .hover-overlay p {
+      font-size: 16px;
+      color: #555;
+      max-height: 150px;
+      overflow-y: auto;
+    }
 
-          footer {
-            flex-direction: column;
-            text-align: center;
-            padding: 15px 10px;
-            gap: 8px;
-          }
+    @media screen and (max-width: 600px) {
+      .items-container {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 10px;
+        gap: 20px;
+      }
 
-          footer h3,
-          footer p {
-            margin: 5px 0;
-            flex: unset;
-          }
-        }
-        .filter{
-            text-align: center;
-            font-family: 'Times New Roman', Times, serif;
-            font-size: large;
-            font-weight: bold;
-            color: darkred;
-        }
-        .option{
-            padding: 6px 10px; 
-            margin-left: 10px; 
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 10px;
-            background-color: #fff;
-            color: black;
-            border-color: black;
-            border-width: 2px;
-        }
+      .item-card {
+        height: 100%;
+        width: 180px;
+      }
+
+      .item-card img {
+        height: 210px;
+        width: 150px;
+      }
+
+      .card-buttons form,
+      .card-buttons button.view-more-btn,
+      .card-buttons button {
+        font-size: 14px;
+        flex: 1 1 100%;
+        min-width: unset;
+      }
+
+      nav .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+      }
+
+      nav .menu.active {
+        display: flex;
+      }
+
+      nav .hamburger {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+      nav .hamburger span {
+        background: white;
+        height: 3px;
+        margin: 4px 0;
+        width: 25px;
+        border-radius: 2px;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px 10px;
+        gap: 8px;
+      }
+
+      footer h3,
+      footer p {
+        margin: 5px 0;
+        flex: unset;
+      }
+    }
+
+    footer {
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    footer h3 {
+      margin-bottom: 10px;
+      font-family: Georgia, serif;
+    }
+
+    footer p {
+      font-size: 15px;
+      margin-top: 15px;
+    }
         
     </style>
 </head>
@@ -347,20 +433,25 @@ $cartStmt->close();
 </div>
 
 
-<!-- Items Display -->
-<div class="items-container">
-    <?php if (!empty($results)): ?>
+<?php if (!empty($results)): ?>
+    <div class="items-container">
         <?php foreach ($results as $item): ?>
             <div class="item-card">
-                <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="">
+                <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>">
+
                 <div class="item-details">
-                    <h3><?php echo htmlspecialchars($item['name']); ?></h3>
-                    <p>₹<?php echo htmlspecialchars($item['price']); ?></p>
-                    <p style="font-size: 13px; color: #888;"><?php echo htmlspecialchars($item['category']); ?></p>
-                    <p style="font-size: 12px; color: #999;">Source: <?php echo ucfirst($item['source_table']); ?></p>
+                    <h3><?php echo strtoupper(htmlspecialchars($item['name'])); ?></h3>
+                    <p>Price: ₹<?php echo htmlspecialchars($item['price']); ?></p>
+                    <p>Rating: <?php echo htmlspecialchars($item['rating']); ?> ⭐</p>
                 </div>
 
                 <div class="card-buttons">
+                    <form method="GET" action="product.php">
+                        <input type="hidden" name="table" value="<?php echo htmlspecialchars($item['source_table']); ?>">
+                        <input type="hidden" name="name" value="<?php echo htmlspecialchars($item['name']); ?>">
+                        <button type="submit" class="view-more-btn">View</button>
+                    </form>
+
                     <?php if (isset($cartItems[$item['name']])): ?>
                         <form action="update_quantity.php" method="POST" class="quantity-form">
                             <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
@@ -373,20 +464,19 @@ $cartStmt->close();
                             <input type="hidden" name="product_name" value="<?php echo htmlspecialchars($item['name']); ?>">
                             <input type="hidden" name="price" value="<?php echo htmlspecialchars($item['price']); ?>">
                             <input type="hidden" name="image" value="<?php echo htmlspecialchars($item['image']); ?>">
-                            <button type="submit" name="action" value="increase" class="add-to-cart-link">🛒 Add to Cart</button>
+                            <button type="submit" name="action" value="increase" class="add-to-cart-link">Add to Cart</button>
                         </form>
                     <?php endif; ?>
                 </div>
             </div>
         <?php endforeach; ?>
-    <?php else: ?>
-        <p style="color:white; text-align:center; font-weight:bold; font-size: 25px">
-            No related items found for "<?php echo htmlspecialchars($query); ?>".
-        </p>
-    <?php endif; ?>
-</div>
-
     </div>
+<?php else: ?>
+    <p style="color:white; text-align:center; font-weight:bold; font-size: 25px">
+        No related items found for "<?php echo htmlspecialchars($query); ?>".
+    </p>
+<?php endif; ?>
+
 
     <?php include 'footer.php'; ?>
 </div>
