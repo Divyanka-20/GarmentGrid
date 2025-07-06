@@ -12,21 +12,28 @@ This project showcases my skills in full-stack web development, database integra
 
 ---
 
+## 🌐 Live Demo
+
+Check out the live site here 👉 [GarmentGrid Live](http://www.garmentgrid.great-site.net/)
+
+---
+
 ## Features
 
   - ✅ User registration and login system with secure session management  
   - 🛍️ Browse products by categories (Men’s Wear, Women’s Wear, Kids, Accessories, etc.)  
   - 🛒 Dynamic shopping cart with add, remove, and update quantity functionality  
-  - 🎟️ Multiple discount coupon codes with custom validation, allowing **one-time use per user**  
+  - 🎟️ Multiple discount coupon codes with custom validation 
   - 💰 Real-time cart price calculations including discounts and shipping fees  
-  - 📝 Order placement with detailed order history and option to **cancel orders anytime**  
+  - 📝 Order placement with detailed order history and option to **cancel orders anytime**
+  - 🌟 Rate your purchased items from order history   
   - 📱 Fully responsive design for seamless experience on mobile and desktop devices  
   - 🔐 Secure backend with prepared statements to prevent SQL injection and other vulnerabilities  
   - 🧩 Modular and clean PHP codebase for easy maintenance and scalability  
   - 👤 User profile management: update personal information easily in the account section  
   - 🔍 Advanced search with category filters for quick product discovery  
-- 🚪 User logout functionality to securely end sessions
-  
+  - 🚪 User logout functionality to securely end sessions
+  - 
 ---
 
 ## 🚀 Tech Stack Used
@@ -36,6 +43,15 @@ This project showcases my skills in full-stack web development, database integra
   - 🗄️ **Database:** MySQL  
   - 📂 **Version Control:** Git, GitHub  
   - 🌐 **Server:** Apache / XAMPP (for local development)  
+
+---
+
+## 🧠 Key Highlights
+  - 🎟️ Coupon engine with smart constraints (e.g., minimum cart value, item count, category-based)
+  - 🧾 Clean and modular PHP code with separation of concerns
+  - 🧮 Automatically updates total, discounts, and shipping on the fly
+  - 🌟 Star-based product ratings stored in database and averaged per product
+  - 🛠️ Easily extendable with features like payment gateway, admin dashboard, email confirmations, etc.
 
 ---
 
