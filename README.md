@@ -33,7 +33,7 @@ Check out the live site here 👉 [GarmentGrid](http://www.garmentgrid.great-sit
   - 👤 User profile management: update personal information easily in the account section  
   - 🔍 Advanced search with category filters for quick product discovery  
   - 🚪 User logout functionality to securely end sessions
-  - 
+    
 ---
 
 ## 🚀 Tech Stack Used
