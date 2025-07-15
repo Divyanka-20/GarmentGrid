@@ -14,7 +14,7 @@ This project showcases my skills in full-stack web development, database integra
 
 ## 🌐 Live Demo
 
-Check out the live site here 👉 [GarmentGrid](http://www.garmentgrid.great-site.net/)
+Check out the live site here 👉 [GarmentGrid](https://www.linkedin.com/posts/divyanka-barnwal_webdevelopment-php-mysql-activity-7347815981345357827-7r8A?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEcBWAcBwj11Wl6Am9eUEoh8pY3MJDbLcIw)
 
 ---
 
